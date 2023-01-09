@@ -26,6 +26,7 @@ use App\Http\Controllers\Frontend\Stats\DailyStatsController;
 use App\Http\Controllers\Frontend\Stats\YearInReviewController;
 use App\Http\Controllers\Frontend\Support\SupportController;
 use App\Http\Controllers\Frontend\Transport\StatusController;
+use App\Http\Controllers\Frontend\UMapController;
 use App\Http\Controllers\Frontend\User\ProfilePictureController;
 use App\Http\Controllers\FrontendStaticController;
 use App\Http\Controllers\FrontendStatusController;
@@ -162,6 +163,8 @@ Route::middleware(['auth', 'privacy'])->group(function() {
         Route::post('/', [SettingsController::class, 'updateMainSettings']);
         Route::post('/update/privacy', [SettingsController::class, 'updatePrivacySettings'])
              ->name('settings.privacy');
+        Route::post('/update/umap', [UMapController::class, 'updateUMapSettings'])
+             ->name('settings.umap');
 
         Route::post('/password', [SettingsController::class, 'updatePassword'])
              ->name('password.change');

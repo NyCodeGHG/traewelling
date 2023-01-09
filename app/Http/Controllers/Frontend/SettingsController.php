@@ -98,7 +98,8 @@ class SettingsController extends Controller
     public function renderSettings(): Renderable {
         return view('settings.settings', [
             'sessions' => SessionController::index(user: auth()->user()),
-            'tokens'   => TokenController::index(user: auth()->user())
+            'tokens'   => TokenController::index(user: auth()->user()),
+            'umap'     => UMapController::index(user: auth()->user()),
         ]);
     }
 

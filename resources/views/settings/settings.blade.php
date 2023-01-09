@@ -12,6 +12,7 @@
                 @include('settings.cards.login-providers')
                 @include('settings.cards.sessions')
                 @include('settings.cards.ics')
+                @include('settings.cards.umap')
                 @include('settings.cards.api-token')
                 @include('settings.cards.account-deletion')
             </div>
