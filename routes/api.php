@@ -14,6 +14,7 @@
 use App\Http\Controllers\API\v1\AuthController as v1Auth;
 use App\Http\Controllers\API\v1\EventController;
 use App\Http\Controllers\API\v1\FollowController;
+use App\Http\Controllers\API\v1\GroupController;
 use App\Http\Controllers\API\v1\IcsController;
 use App\Http\Controllers\API\v1\LikesController;
 use App\Http\Controllers\API\v1\NotificationsController;
@@ -155,6 +156,11 @@ Route::group(['prefix' => 'v1', 'middleware' => ['return-json']], static functio
             Route::get('/', [WebhookController::class, 'getWebhooks']);
             Route::get('/{webhookId}', [WebhookController::class, 'getWebhook']);
             Route::delete('/{webhookId}', [WebhookController::class, 'deleteWebhook']);
+        });
+        Route::group(['prefix' => 'group'], static function() {
+            Route::get("/", [GroupController::class, 'listGroups']);
+            Route::get("/{groupId}", [GroupController::class, 'getGroup']);
+            Route::post('/', [GroupController::class, 'createGroup']);
         });
     });
 
