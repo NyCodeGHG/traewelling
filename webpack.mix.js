@@ -18,6 +18,7 @@ mix.js("resources/js/app.js", "public/js").vue()
     .js("resources/js/admin.js", "public/js")
     .sass("resources/sass/admin.scss", "public/css")
     .sass("resources/sass/welcome.scss", "public/css")
+    .js("resources/vue/components/groups/create_group.js", "public/js")
     .sourceMaps();
 
 if (mix.inProduction()) {
