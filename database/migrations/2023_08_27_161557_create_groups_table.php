@@ -11,8 +11,7 @@ return new class extends Migration {
             $table->timestamps();
             $table->text('name');
             $table->text('description')->nullable();
-            $table->dateTimeTz('start');
-            $table->dateTimeTz('end');
+            $table->unsignedInteger('inactivity_hours');
             $table->foreignId('owner_id')
                 ->constrained('users')
                 ->cascadeOnUpdate();

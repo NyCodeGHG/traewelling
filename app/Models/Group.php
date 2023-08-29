@@ -15,14 +15,12 @@ class Group extends Model {
     protected $fillable = [
         'name',
         'description',
-        'start',
-        'end',
+        'inactivity_hours',
         'owner_id',
     ];
     protected $casts = [
         'id' => 'integer',
-        'start' => 'datetime',
-        'end' => 'datetime',
+        'inactivity_hours' => 'datetime',
         'owner_id' => 'integer',
     ];
 
