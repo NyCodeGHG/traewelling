@@ -16,6 +16,7 @@ use App\Http\Controllers\Frontend\ChangelogController;
 use App\Http\Controllers\Frontend\DevController;
 use App\Http\Controllers\Frontend\EventController;
 use App\Http\Controllers\Frontend\Export\ExportController;
+use App\Http\Controllers\Frontend\GroupController;
 use App\Http\Controllers\Frontend\IcsController;
 use App\Http\Controllers\Frontend\LeaderboardController;
 use App\Http\Controllers\Frontend\SettingsController;
@@ -257,6 +258,9 @@ Route::middleware(['auth', 'privacy'])->group(function() {
          ->name('user.mute'); //TODO: Replace with API Endpoint
     Route::post('/user/unmute', [\App\Http\Controllers\Frontend\UserController::class, 'unmuteUser'])
          ->name('user.unmute'); //TODO: Replace with API Endpoint
+
+    Route::get('/groups/new', [GroupController::class, 'renderCreateGroup'])
+        ->name('groups.create');
 });
 
 Route::get('/sitemap.xml', [SitemapController::class, 'renderSitemap']);
