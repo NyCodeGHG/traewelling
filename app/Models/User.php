@@ -289,4 +289,8 @@ class User extends Authenticatable implements MustVerifyEmail
     public function preferredLocale(): string {
         return $this->language;
     }
+
+    public function groups(): BelongsToMany {
+        return $this->belongsToMany(Group::class, 'group_members');
+    }
 }
