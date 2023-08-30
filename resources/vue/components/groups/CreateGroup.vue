@@ -1,9 +1,11 @@
 <script setup>
 // @ts-check
-import { useForm } from 'vee-validate';
+import { useForm, useIsFormValid, useIsSubmitting } from 'vee-validate';
 import { toTypedSchema } from '@vee-validate/valibot';
-import { object, string, number, minLength, minValue, maxValue, optional, any } from 'valibot';
+import { object, string, number, minLength, minValue, maxValue, optional } from 'valibot';
 import { computed } from 'vue';
+import { createGroup } from './group_api';
+import { notyf } from '../../../js/app';
 
 const schema = toTypedSchema(
     object({
@@ -16,12 +18,12 @@ const schema = toTypedSchema(
     })
 );
 
-const { values, errors, defineInputBinds } = useForm({
+const { values, errors, defineInputBinds, handleSubmit } = useForm({
     validationSchema: schema,
     initialValues: {
         duration: 1,
         name: '',
-    }
+    },
 });
 
 const name = defineInputBinds('name');
@@ -40,6 +42,18 @@ const formattedDuration = computed(() => {
     }
 });
 
+const isValid = useIsFormValid();
+const isSubmitting = useIsSubmitting();
+
+const onSubmit = handleSubmit(async values => {
+    try {
+        const group = await createGroup(values.name, values.description ?? null, values.duration)
+        window.location.pathname = `/groups/${group.id}`;
+    } catch (error) {
+        notyf.error(`Failed to create group: ${error}`);
+    }
+});
+
 </script>
 
 <template>
@@ -48,7 +62,7 @@ const formattedDuration = computed(() => {
             <div class="card">
                 <div class="card-header">Create new Group</div>
                 <div class="card-body">
-                    <form class="row g-4" novalidate>
+                    <form class="row g-4" novalidate @submit="onSubmit">
                         <div class="col-md-12 col-lg-10">
                             <div class="form-outline">
                                 <input type="text" class="form-control"
@@ -79,13 +93,12 @@ const formattedDuration = computed(() => {
                             </div>
                         </div>
                         <div class="col-md-12 d-flex justify-content-center">
-                            <button class="btn btn-outline-primary">
+                            <button class="btn btn-outline-primary" :disabled="!isValid || isSubmitting">
                                 Create Group
                             </button>
                         </div>
                     </form>
                 </div>
-                <pre>{{ values }}</pre>
             </div>
         </div>
     </div>

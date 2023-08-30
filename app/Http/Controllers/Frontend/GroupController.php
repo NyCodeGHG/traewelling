@@ -7,6 +7,10 @@ use Illuminate\Contracts\Support\Renderable;
 
 class GroupController extends Controller {
     public function renderCreateGroup(): Renderable {
-        return view('groups.create');
+        return view('group.create');
+    }
+
+    public function renderGroup(): Renderable {
+        return view('group.view');
     }
 }

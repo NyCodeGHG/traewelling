@@ -259,7 +259,7 @@ Route::middleware(['auth', 'privacy'])->group(function() {
     Route::post('/user/unmute', [\App\Http\Controllers\Frontend\UserController::class, 'unmuteUser'])
          ->name('user.unmute'); //TODO: Replace with API Endpoint
 
-    Route::get('/groups/new', [GroupController::class, 'renderCreateGroup'])
+    Route::get('/group/new', [GroupController::class, 'renderCreateGroup'])
         ->name('groups.create');
 });
 

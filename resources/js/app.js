@@ -14,7 +14,7 @@ import "./api/api";
 import "./components/maps";
 import CheckinSuccessHelper from "../vue/components/CheckinSuccessHelper.vue";
 
-window.notyf = new Notyf({
+export const notyf = new Notyf({
     duration: 5000,
     position: { x: "right", y: window.innerWidth > 480 ? "top" : "bottom" },
     dismissible: true,
@@ -41,6 +41,8 @@ window.notyf = new Notyf({
     ],
 });
 
+window.notyf = notyf;
+
 document.addEventListener("DOMContentLoaded", function() {
 
     const app = createApp({});
@@ -60,7 +62,6 @@ document.addEventListener("DOMContentLoaded", function() {
     const app4 = createApp({});
     app4.component('CheckinSuccessHelper', CheckinSuccessHelper);
     app4.mount('#checkin-success-helper');
-
 });
 
 /**
