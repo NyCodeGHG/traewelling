@@ -12,9 +12,11 @@ return new class extends Migration {
             $table->text('name');
             $table->text('description')->nullable();
             $table->unsignedInteger('inactivity_hours');
+            $table->dateTime('last_activity')->useCurrent();
             $table->foreignId('owner_id')
                 ->constrained('users')
-                ->cascadeOnUpdate();
+                ->cascadeOnUpdate()
+                ->cascadeOnDelete();
         });
     }
 
