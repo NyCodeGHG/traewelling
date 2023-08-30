@@ -22,14 +22,14 @@ class GroupResource extends JsonResource {
     }
 
     public function toArray($request): array {
-        $members = $this->members->map(fn ($member) => new UserBaseResource($member));
+        $members = $this->members->map(fn($member) => new UserResource($member));
         return [
             'id' => (int) $this->group->id,
             'name' => (string) $this->group->name,
             'description' => $this->group->description,
             'inactivityHours' => (int) $this->group->inactivity_hours,
             'members' => $members,
-            'owner' => new UserBaseResource($this->owner),
-         ];
+            'owner' => new UserResource($this->owner),
+        ];
     }
 }

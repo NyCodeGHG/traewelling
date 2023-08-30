@@ -1,12 +1,13 @@
 <?php
 
 namespace App\Http\Controllers\API\v1;
+
 use App\Http\Resources\GroupResource;
 use App\Models\Group;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Backend\GroupController as GroupBackend;
-use Illuminate\Http\Resources\Json\ResourceCollection;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class GroupController extends Controller {
     public function createGroup(Request $request): GroupResource {
@@ -36,9 +37,9 @@ class GroupController extends Controller {
         return new GroupResource($group);
     }
 
-    public function listGroups(Request $request): ResourceCollection {
+    public function listGroups(Request $request): AnonymousResourceCollection {
         $userId = $request->user()->id;
-        return new ResourceCollection(
+        return GroupResource::collection(
             Group::with('members')
             ->whereHas('members', function (Builder $query) use ($userId) {
                 $query->where('user_id', '=', $userId);
