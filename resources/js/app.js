@@ -12,6 +12,10 @@ require("leaflet/dist/leaflet.js");
 require("./api/api");
 require("./components/maps");
 
+/**
+ * @type {Notyf}
+ */
+export let notyf;
 
 document.addEventListener("DOMContentLoaded", function () {
 
@@ -24,7 +28,7 @@ document.addEventListener("DOMContentLoaded", function () {
     app2.component('ActiveJourneyMap', ActiveJourneyMap);
     app2.mount('#activeJourneys');
 
-    window.notyf = new Notyf({
+    notyf = new Notyf({
         duration: 5000,
         position: { x: "right", y: "top" },
         dismissible: true,
@@ -50,6 +54,8 @@ document.addEventListener("DOMContentLoaded", function () {
             },
         ],
     });
+    // Backwards compat for old code.
+    window.notyf = notyf;
 });
 
 /**

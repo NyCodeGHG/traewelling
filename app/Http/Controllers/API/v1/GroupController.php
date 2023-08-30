@@ -12,7 +12,7 @@ class GroupController extends Controller {
     public function createGroup(Request $request): GroupResource {
         $validated = $request->validate([
             'name' => ['required', 'string'],
-            'description' => ['string'],
+            'description' => ['nullable', 'string'],
             'inactivityHours' => ['required', 'min:1', 'max:48'],
         ]);
         $group = GroupBackend::createGroup(
