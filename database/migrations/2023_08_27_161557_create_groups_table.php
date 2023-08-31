@@ -13,6 +13,7 @@ return new class extends Migration {
             $table->text('description')->nullable();
             $table->unsignedInteger('inactivity_hours');
             $table->dateTime('last_activity')->useCurrent();
+            $table->boolean('active')->default(true);
             $table->foreignId('owner_id')
                 ->constrained('users')
                 ->cascadeOnUpdate()

@@ -17,11 +17,14 @@ class Group extends Model {
         'description',
         'inactivity_hours',
         'owner_id',
+        'active',
     ];
     protected $casts = [
         'id' => 'integer',
         'inactivity_hours' => 'integer',
         'owner_id' => 'integer',
+        'active' => 'boolean',
+        'last_activity' => 'datetime',
     ];
 
     /**
