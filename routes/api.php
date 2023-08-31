@@ -157,9 +157,14 @@ Route::group(['prefix' => 'v1', 'middleware' => ['return-json']], static functio
             Route::delete('/{webhookId}', [WebhookController::class, 'deleteWebhook']);
         });
         Route::group(['prefix' => 'group'], static function() {
-            Route::get("/", [GroupController::class, 'listGroups']);
-            Route::get("/{groupId}", [GroupController::class, 'getGroup']);
-            Route::post('/', [GroupController::class, 'createGroup']);
+            Route::group(['middleware' => ['scope:read-groups']], static function() {
+                Route::get('/', [GroupController::class, 'listGroups']);
+                Route::get('/current', [GroupController::class, 'currentGroup']);
+                Route::get('/{groupId}', [GroupController::class, 'getGroup']);
+            });
+            Route::group(['middleware' => ['scope:write-groups']], static function () {
+                Route::post('/', [GroupController::class, 'createGroup']);
+            });
         });
     });
 

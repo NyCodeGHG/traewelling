@@ -44,7 +44,6 @@ export const notyf = new Notyf({
 window.notyf = notyf;
 
 document.addEventListener("DOMContentLoaded", function() {
-
     const app = createApp({});
     app.component('NotificationBell', NotificationBell);
     app.config.devtools = true;

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\v1;
 use App\Http\Resources\GroupResource;
 use App\Models\Group;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Backend\GroupController as GroupBackend;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -41,11 +42,19 @@ class GroupController extends Controller {
         $userId = $request->user()->id;
         return GroupResource::collection(
             Group::with('members')
-            ->whereHas('members', function (Builder $query) use ($userId) {
-                $query->where('user_id', '=', $userId);
-            })
-            ->orderBy('created_at')
-            ->simplePaginate()
+                ->whereHas('members', function (Builder $query) use ($userId) {
+                    $query->where('user_id', '=', $userId);
+                })
+                ->orderBy('created_at')
+                ->simplePaginate()
         );
+    }
+
+    public function currentGroup(Request $request): GroupResource|JsonResponse {
+        $group = GroupBackend::getCurrentGroup($request->user());
+        if ($group == null) {
+            return $this->sendError('User is not in a group');
+        }
+        return new GroupResource($group);
     }
 }

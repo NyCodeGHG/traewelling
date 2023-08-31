@@ -30,6 +30,9 @@ class GroupResource extends JsonResource {
             'inactivityHours' => (int) $this->group->inactivity_hours,
             'members' => $members,
             'owner' => new UserResource($this->owner),
+            'active' => $this->group->active,
+            'lastActivity' => $this->group->last_activity,
+            'createdAt' => $this->group->created_at,
         ];
     }
 }
