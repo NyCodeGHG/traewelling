@@ -129,6 +129,7 @@ return [
         'default' => [
             'scheme'   => env('REDIS_SCHEME', 'tcp'),
             'host'     => env('REDIS_HOST', '127.0.0.1'),
+            'path'     => env('REDIS_PATH', null),
             'password' => env('REDIS_PASSWORD', null),
             'port'     => env('REDIS_PORT', 6379),
             'database' => env('REDIS_DB', 0),
@@ -137,6 +138,7 @@ return [
         'cache' => [
             'scheme'   => env('REDIS_SCHEME', 'tcp'),
             'host'     => env('REDIS_HOST', '127.0.0.1'),
+            'path'     => env('REDIS_PATH', null),
             'password' => env('REDIS_PASSWORD', null),
             'port'     => env('REDIS_PORT', 6379),
             'database' => env('REDIS_CACHE_DB', 1),
