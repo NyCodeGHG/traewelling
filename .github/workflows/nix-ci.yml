@@ -25,7 +25,6 @@ jobs:
         run: |
           if [[ ! -z $(git status -s) ]]; then
             git status
-            echo "Nix hashes are not up to date. Update them with the `update-nix-package-dep` command in the nix devshell. or run `/nix-update`"
             echo "up-to-date=false" >> "$GITHUB_OUTPUT"
           fi
 
