@@ -617,6 +617,16 @@
         };
       };
     };
+    "predis/predis" = {
+      targetDir = "";
+      src = composerEnv.buildZipPackage {
+        name = "predis-predis-5f2b410a74afaff296a87a494e4c5488cf9fab57";
+        src = fetchurl {
+          url = "https://api.github.com/repos/predis/predis/zipball/5f2b410a74afaff296a87a494e4c5488cf9fab57";
+          sha256 = "02bf6w5vrzxmd6zzzlgr31g5fbf8k5yyk9gj00a1ql09ndyx51sn";
+        };
+      };
+    };
     "psr/cache" = {
       targetDir = "";
       src = composerEnv.buildZipPackage {
