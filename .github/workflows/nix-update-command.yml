@@ -39,7 +39,7 @@ jobs:
           fi
 
       - name: Add no permission reacton
-        if: "${{ steps.perms.outputs.allowed == false }}"
+        if: "${{ steps.perms.outputs.allowed == 'false' }}"
         uses: peter-evans/create-or-update-comment@v3
         with:
           comment-id: ${{ github.event.comment.id }}

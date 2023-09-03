@@ -31,7 +31,7 @@ jobs:
 
       - name: Find Comment
         uses: peter-evans/find-comment@v2
-        if: "github.event_name == 'pull_request' && steps.check.outputs.up-to-date == false"
+        if: "github.event_name == 'pull_request' && steps.check.outputs.up-to-date == 'false'"
         id: fc
         with:
           issue-number: ${{ github.event.pull_request.number }}
@@ -39,7 +39,7 @@ jobs:
           body-includes: This comment was written by a bot!
 
       - name: Create comment
-        if: "steps.fc.outputs.comment-id == '' && github.event_name == 'pull_request' && steps.check.outputs.up-to-date == false"
+        if: "steps.fc.outputs.comment-id == '' && github.event_name == 'pull_request' && steps.check.outputs.up-to-date == 'false'"
         uses: peter-evans/create-or-update-comment@v3
         with:
           issue-number: ${{ github.event.pull_request.number }}
@@ -52,7 +52,7 @@ jobs:
             *This comment was written by a bot!* 🤖
 
       - name: Fail Build
-        if: "steps.check.outputs.up-to-date == false"
+        if: "steps.check.outputs.up-to-date == 'false'"
         shell: bash
         run: exit 1
 
