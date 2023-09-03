@@ -23,7 +23,7 @@ jobs:
       - name: Check if up-to-date
         shell: bash
         run: |
-          if [ "$(git status --porcelain=v1 2>/dev/null | wc -l)" = "1" ]; then
+          if [[ -z $(git status -s) ]]; then
             git status
             echo "Nix hashes are not up to date. Update them with the `update-nix-package-dep` command in the nix devshell. or run `/nix-update`"
             exit 1
