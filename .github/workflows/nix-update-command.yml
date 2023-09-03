@@ -24,7 +24,8 @@ jobs:
         shell: bash
         id: perms
         run: |
-          if nix eval --expr "import ./.github/allowed-nix-update-users.nix (builtins.fromJSON (${{ toJSON(github) }}))" --impure; then
+          echo '${{ toJSON(github) }}' > /tmp/github-context.json
+          if nix eval --expr "import ./.github/allowed-nix-update-users.nix (builtins.fromJSON ''${{ toJSON(github) }}'')" --impure; then
             echo "allowed=true" >> "$GITHUB_OUTPUT"
           else
             echo "allowed=false" >> "$GITHUB_OUTPUT"
