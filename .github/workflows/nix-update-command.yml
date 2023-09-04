@@ -4,12 +4,18 @@ on:
     types:
       - created
       - edited
+  pull_request:
+    types:
+      - opened
+    branches:
+      - develop
 
 concurrency: nix-update-${{ github.event.issue.number }}
 
 jobs:
   command:
-    if: "github.event.comment.body == '/nix-update' && github.event.issue.pull_request"
+    # automatically run on renovate and dependabot PRs
+    if: "(github.event_name == 'issue_comment' && github.event.comment.body == '/nix-update' && github.event.issue.pull_request) || (github.event_name == 'pull_request' && github.actor == 'dependabot[bot]' || github.actor == 'renovate[bot]')"
     runs-on: ubuntu-latest
     permissions:
       contents: write
