@@ -62,6 +62,8 @@ jobs:
       - if: "${{ steps.perms.outputs.allowed && github.event_name == 'issue_comment' }}"
         name: Checkout PR
         shell: bash
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           branchName=$(gh pr view -R ${{ github.repository }} ${{ github.event.issue.number }} --json "headRefName" --jq '.headRefName')
           git fetch origin "refs/pull/${{ github.event.issue.number }}/head:$branchName"
