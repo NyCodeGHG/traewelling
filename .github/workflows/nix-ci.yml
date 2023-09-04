@@ -57,15 +57,30 @@ jobs:
 
       - name: Find Comment
         uses: peter-evans/find-comment@v2
-        if: "(github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.repository) && steps.check-changes.outputs.skip != 'true' && github.event_name == 'pull_request' && steps.check.outputs.up-to-date == 'false'"
+        if: "github.event.pull_request.head.repo.full_name == github.repository && steps.check-changes.outputs.skip != 'true' && github.event_name == 'pull_request' && steps.check.outputs.up-to-date == 'false'"
         id: fc
         with:
           issue-number: ${{ github.event.pull_request.number }}
           comment-author: 'github-actions[bot]'
           body-includes: The composer or npm dependencies are out of sync with the generated nix files.
 
+      - name: Write Summary
+        if: "steps.check-changes.outputs.skip != 'true' && steps.check.outputs.up-to-date == 'false'"
+        shell: bash
+        run: |
+          cat <<EOF >> $GITHUB_STEP_SUMMARY
+          The composer or npm dependencies are out of sync with the generated nix files.
+
+          Please update the files by either running the `update-nix-package-dep` script locally,
+          let GitHub actions do it by running `/nix-update` or apply the following patch.
+
+          \`\`\`patch
+          $(git diff)
+          \`\`\`
+          EOF
+
       - name: Create comment
-        if: "(github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.repository) && steps.check-changes.outputs.skip != 'true' && steps.fc.outputs.comment-id == '' && github.event_name == 'pull_request' && steps.check.outputs.up-to-date == 'false'"
+        if: "github.event.pull_request.head.repo.full_name == github.repository && steps.check-changes.outputs.skip != 'true' && steps.fc.outputs.comment-id == '' && github.event_name == 'pull_request' && steps.check.outputs.up-to-date == 'false'"
         uses: peter-evans/create-or-update-comment@v3
         with:
           issue-number: ${{ github.event.pull_request.number }}
