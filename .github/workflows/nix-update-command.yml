@@ -68,8 +68,8 @@ jobs:
           repoOwner=$(echo $response | jq '.headRepositoryOwner')
           echo "branchName=$branchName" >> "$GITHUB_OUTPUT"
           echo "branchSha=$branchSha" >> "$GITHUB_OUTPUT"
-          echo "repoName=$repoName" >> "$GITHUB_OUTPUT""
-          echo "repoOwner=$repoOwner" >> "$GITHUB_OUTPUT""
+          echo "repoName=$repoName" >> "$GITHUB_OUTPUT"
+          echo "repoOwner=$repoOwner" >> "$GITHUB_OUTPUT"
 
       - if: "${{ steps.perms.outputs.allowed }}"
         name: Checkout
