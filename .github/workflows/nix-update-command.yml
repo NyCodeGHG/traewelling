@@ -91,6 +91,7 @@ jobs:
           # Configure git user
           git config user.name "GitHub Actions"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          GH_REPO="${{ steps.vars.outputs.repoOwner }}/${{ steps.vars.outputs.repoName }}"
 
           # Check if any changes were made
           git status
@@ -103,14 +104,14 @@ jobs:
 
             git push
 
-            gh pr comment ${{ github.event.issue.number }} -F - <<EOF
+            gh pr comment ${{ github.event.issue.number }} -F - <<EOF || true
           Successfully updated generated nix files! 🚀
 
           Run triggered by @${{ github.event.sender.login }} (${{ github.event.comment.html_url }})
           *This comment was written by a bot!* 🤖
           EOF
           else
-            gh pr comment ${{ github.event.issue.number }} -F - <<EOF
+            gh pr comment ${{ github.event.issue.number }} -F - <<EOF || true
           Generated files are up to date! 👌
 
           Run triggered by @${{ github.event.sender.login }} (${{ github.event.comment.html_url }})
