@@ -91,7 +91,7 @@ jobs:
           # Configure git user
           git config user.name "GitHub Actions"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          export GH_REPO="${{ steps.vars.outputs.repoOwner }}/${{ steps.vars.outputs.repoName }}"
+          export GH_REPO="${{ github.repository }}"
 
           # Check if any changes were made
           git status
