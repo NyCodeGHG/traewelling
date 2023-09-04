@@ -6,7 +6,7 @@ buildNpmPackage {
   name = "traewelling-web";
   src = lib.cleanSource ../../..;
 
-  npmDepsHash = "sha256-3WmVa6GoJkiAXDh3IqHbkeRxZLFhSCbbaEOPoNF4ybU=";
+  npmDepsHash = "sha256-KSwTzmwjETsaWPEWzgVIefE6pwwAiq5UmxEJEDpyU/M=";
   npmPackFlags = ["--ignore-scripts"];
   npmBuildScript = "production";
 
