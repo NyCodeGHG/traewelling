@@ -53,21 +53,30 @@ jobs:
           comment-id: ${{ github.event.comment.id }}
           reactions: '+1'
 
+
+      - if: "${{ steps.perms.outputs.allowed }}"
+        name: Get variables
+        shell: bash
+        id: vars
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          response=$(gh pr view -R ${{ github.repository }} ${{ github.event.issue.number }} --json "headRefName,headRefOid,headRepository,headRepositoryOwner")
+          branchName=$(echo $response | jq '.headRefName')
+          branchSha=$(echo $response | jq '.headRefOid')
+          repoName=$(echo $response | jq '.headRepository')
+          repoOwner=$(echo $response | jq '.headRepositoryOwner')
+          echo "branchName=$branchName" >> "$GITHUB_OUTPUT"
+          echo "branchSha=$branchSha" >> "$GITHUB_OUTPUT"
+          echo "repoName=$repoName" >> "$GITHUB_OUTPUT""
+          echo "repoOwner=$repoOwner" >> "$GITHUB_OUTPUT""
+
       - if: "${{ steps.perms.outputs.allowed }}"
         name: Checkout
         uses: actions/checkout@v4
         with:
-          ref: ${{ steps.comment-branch.outputs.head_ref }}
-
-      - if: "${{ steps.perms.outputs.allowed && github.event_name == 'issue_comment' }}"
-        name: Checkout PR
-        shell: bash
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          branchName=$(gh pr view -R ${{ github.repository }} ${{ github.event.issue.number }} --json "headRefName" --jq '.headRefName')
-          git fetch origin "refs/pull/${{ github.event.issue.number }}/head:$branchName"
-          git checkout -B "$branchName"
+          ref: refs/heads/${{ steps.vars.outputs.branchName }}
+          repository: ${{ steps.vars.outputs.repoOwner }}/${{ steps.vars.outputs.repoName }}
 
       - name: Update Nix Files
         if: "${{ steps.perms.outputs.allowed }}"
