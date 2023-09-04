@@ -58,20 +58,13 @@ jobs:
           comment-id: ${{ github.event.comment.id }}
           reactions: '+1'
 
-      - id: get-branch
-        if: "${{ steps.perms.outputs.allowed }}"
-        name: Get PR branch
-        run: echo "branch=$(gh pr view $PR_NO --repo $REPO --json headRefName --jq '.headRefName')" >> "$GITHUB_OUTPUT"
+      - if: "${{ steps.perms.outputs.allowed }}"
+        name: Checkout PR
+        run: gh pr checkout $PR_NO --repo $REPO
         env:
           REPO: ${{ github.repository }}
           PR_NO: ${{ github.event.issue.number }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Checkout PR
-        if: "${{ steps.perms.outputs.allowed }}"
-        uses: actions/checkout@v3
-        with:
-          ref: ${{ steps.get-branch.outputs.branch }}
 
       - name: Update Nix Files
         if: "${{ steps.perms.outputs.allowed }}"
