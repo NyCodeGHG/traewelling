@@ -55,7 +55,11 @@ jobs:
 
       - if: "${{ steps.perms.outputs.allowed }}"
         name: Checkout PR
-        run: gh pr checkout ${{ github.event.issue.number}}
+        shell: bash
+        run: |
+          git init
+          git remote add origin https://github.com/${{ github.repository }}.git
+          gh pr checkout ${{ github.event.issue.number}}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
