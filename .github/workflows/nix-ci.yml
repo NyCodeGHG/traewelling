@@ -57,7 +57,7 @@ jobs:
 
       - name: Find Comment
         uses: peter-evans/find-comment@v2
-        if: "steps.check-changes.outputs.skip != 'true' && github.event_name == 'pull_request' && steps.check.outputs.up-to-date == 'false'"
+        if: "(github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.repository) && steps.check-changes.outputs.skip != 'true' && github.event_name == 'pull_request' && steps.check.outputs.up-to-date == 'false'"
         id: fc
         with:
           issue-number: ${{ github.event.pull_request.number }}
@@ -65,7 +65,7 @@ jobs:
           body-includes: The composer or npm dependencies are out of sync with the generated nix files.
 
       - name: Create comment
-        if: "steps.check-changes.outputs.skip != 'true' && steps.fc.outputs.comment-id == '' && github.event_name == 'pull_request' && steps.check.outputs.up-to-date == 'false'"
+        if: "(github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.repository) && steps.check-changes.outputs.skip != 'true' && steps.fc.outputs.comment-id == '' && github.event_name == 'pull_request' && steps.check.outputs.up-to-date == 'false'"
         uses: peter-evans/create-or-update-comment@v3
         with:
           issue-number: ${{ github.event.pull_request.number }}
