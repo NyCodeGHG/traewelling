@@ -81,6 +81,7 @@ jobs:
           # Configure git user
           git config user.name "GitHub Actions"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config branch.autoSetupMerge simple
 
           # Check if any changes were made
           if [[ -n $(git status -s) ]]; then
