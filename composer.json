@@ -8,7 +8,8 @@
         "social",
         "network",
         "trains",
-        "public transport"
+        "public transport",
+        "uwu",
     ],
     "license": "AGPL-3.0-only",
     "require": {
