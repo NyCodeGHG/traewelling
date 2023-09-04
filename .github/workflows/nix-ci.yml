@@ -19,7 +19,7 @@ jobs:
           # - nix/
           # - composer.json
           # - composer.lock
-          if [ -n "$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep -P '^(?:package(?:-lock)?\.json$|nix\/|composer\.(?:json|lock)$)')" ]; then
+          if [ -n "$(git diff --name-only ${{ github.event_name == 'push' ? github.event.before : github.event.pull_request.base.ref }} ${{ github.sha }} | grep -P '^(?:package(?:-lock)?\.json$|nix\/|composer\.(?:json|lock)$)')" ]; then
             echo "File(s) changed so this job runs"
           else
             echo "no files changed so we exit neutrally"
