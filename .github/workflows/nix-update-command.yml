@@ -30,6 +30,7 @@ jobs:
       - name: Checkout Self
         uses: actions/checkout@v3
         with:
+          fetch-depth: 0
           repository: ${{ github.repository }}
           ref: refs/heads/${{ github.event.repository.default_branch }}
 
