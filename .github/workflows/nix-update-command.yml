@@ -62,10 +62,10 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           response=$(gh pr view -R ${{ github.repository }} ${{ github.event.issue.number }} --json "headRefName,headRefOid,headRepository,headRepositoryOwner")
-          branchName=$(echo $response | jq '.headRefName')
-          branchSha=$(echo $response | jq '.headRefOid')
-          repoName=$(echo $response | jq '.headRepository')
-          repoOwner=$(echo $response | jq '.headRepositoryOwner')
+          branchName=$(echo $response | jq -r '.headRefName')
+          branchSha=$(echo $response | jq -r '.headRefOid')
+          repoName=$(echo $response | jq -r '.headRepository')
+          repoOwner=$(echo $response | jq -r '.headRepositoryOwner')
           echo "branchName=$branchName" >> "$GITHUB_OUTPUT"
           echo "branchSha=$branchSha" >> "$GITHUB_OUTPUT"
           echo "repoName=$repoName" >> "$GITHUB_OUTPUT"
