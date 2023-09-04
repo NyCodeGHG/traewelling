@@ -55,13 +55,7 @@ jobs:
 
       - if: "${{ steps.perms.outputs.allowed }}"
         name: Checkout PR
-        shell: bash
-        run: |
-          git init
-          git remote add origin https://github.com/${{ github.repository }}.git
-          gh pr checkout ${{ github.event.issue.number}}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: actions/checkout@v4
 
       - name: Update Nix Files
         if: "${{ steps.perms.outputs.allowed }}"
