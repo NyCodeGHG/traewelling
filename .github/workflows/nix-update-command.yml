@@ -98,14 +98,14 @@ jobs:
 
             git push
 
-              gh pr comment ${{ github.event.issue.number }} -F - <<EOF
+            gh pr comment ${{ github.event.issue.number }} -F - <<EOF
           Successfully updated generated nix files! 🚀
 
           Run triggered by @${{ github.event.sender.login }} (${{ github.event.comment.html_url }})
           *This comment was written by a bot!* 🤖
           EOF
           else
-              gh pr comment ${{ github.event.issue.number }} -F - <<EOF
+            gh pr comment ${{ github.event.issue.number }} -F - <<EOF
           Generated files are up to date! 👌
 
           Run triggered by @${{ github.event.sender.login }} (${{ github.event.comment.html_url }})
