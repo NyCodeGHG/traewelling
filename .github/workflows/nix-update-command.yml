@@ -89,7 +89,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
           # Check if any changes were made
-          if [[ ! -z $(git status -s) ]]; then
+          if [[ -n $(git status -s) ]]; then
             git commit -a -F - <<EOF
           nix: Update generated files
 
@@ -98,21 +98,17 @@ jobs:
 
             git push
 
-            if [ "$CREATE_COMMENT" = "true" ]; then
               gh pr comment ${{ github.event.issue.number }} -F - <<EOF
           Successfully updated generated nix files! 🚀
 
           Run triggered by @${{ github.event.sender.login }} (${{ github.event.comment.html_url }})
           *This comment was written by a bot!* 🤖
           EOF
-            fi
           else
-            if [ "$CREATE_COMMENT" = "true" ]; then
               gh pr comment ${{ github.event.issue.number }} -F - <<EOF
           Generated files are up to date! 👌
 
           Run triggered by @${{ github.event.sender.login }} (${{ github.event.comment.html_url }})
           *This comment was written by a bot!* 🤖
           EOF
-            fi
           fi
