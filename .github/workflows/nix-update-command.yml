@@ -72,6 +72,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
           # Check if any changes were made
+          git status
           if [[ -n $(git status -s) ]]; then
             git commit -a -F - <<EOF
           nix: Update generated files
