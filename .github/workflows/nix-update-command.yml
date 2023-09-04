@@ -82,6 +82,7 @@ jobs:
         shell: bash
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CREATE_COMMENT: ${{ github.event.pull_request.head.repo.full_name == github.repository || false }}
         run: |
           # Configure git user
           git config user.name "GitHub Actions"
@@ -96,17 +97,22 @@ jobs:
           EOF
 
             git push
-            gh pr comment ${{ github.event.issue.number }} -F - <<EOF
+
+            if [ "$CREATE_COMMENT" = "true" ]; then
+              gh pr comment ${{ github.event.issue.number }} -F - <<EOF
           Successfully updated generated nix files! 🚀
 
           Run triggered by @${{ github.event.sender.login }} (${{ github.event.comment.html_url }})
           *This comment was written by a bot!* 🤖
           EOF
+            fi
           else
-            gh pr comment ${{ github.event.issue.number }} -F - <<EOF
+            if [ "$CREATE_COMMENT" = "true" ]; then
+              gh pr comment ${{ github.event.issue.number }} -F - <<EOF
           Generated files are up to date! 👌
 
           Run triggered by @${{ github.event.sender.login }} (${{ github.event.comment.html_url }})
           *This comment was written by a bot!* 🤖
           EOF
+            fi
           fi
