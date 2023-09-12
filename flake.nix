@@ -4,10 +4,6 @@
     nixpkgs.url = "github:nixos/nixpkgs/php/add-new-builder-only";
     flake-parts.url = "github:hercules-ci/flake-parts";
     devenv.url = "github:cachix/devenv";
-    composer2nix = {
-      url = "github:svanderburg/composer2nix";
-      flake = false;
-    };
   };
   outputs = inputs @ {flake-parts, ...}:
     flake-parts.lib.mkFlake {inherit inputs;} {
