@@ -1,5 +1,4 @@
-github:
-let
+github: let
   commenter = github.event.sender;
   allowlist = {
     # See id on https://api.github.com/users/<username>
@@ -13,8 +12,8 @@ let
     (builtins.attrValues allowlist) ++ [github.event.issue.user.id]
   );
 in
-  if isAllowedUser then
+  if isAllowedUser
+  then
     builtins.trace "The user '${commenter.login}' is allowed to run the command. ✅"
     true
-  else
-    builtins.throw "The user '${commenter.login}' is not allowed to run the command. ❌"
+  else builtins.throw "The user '${commenter.login}' is not allowed to run the command. ❌"
